@@ -1,0 +1,11 @@
+# Backend 프로젝트 관련
+/backend/node_modules
+/backend/build
+/backend/.env
+
+# Frontend 프로젝트 관련
+/frontend/node_modules
+/frontend/build
+
+# DB (Kubernetes) 관련
+/db/k8s/notes-db-volume.yaml
