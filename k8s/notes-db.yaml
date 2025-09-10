@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: notes-db
+  namespace: db
+spec:
+  selector:
+    matchLabels:
+      run: notes-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: notes-db
+    spec:
+      containers:
+        - name: notes-database
+          image: mariadb:11.2.2
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+            - name: notes-db-storage
+              mountPath: "/var/lib/mysql"
+      volumes:
+        - name: notes-db-storage
+          persistentVolumeClaim:
+            claimName: notes-db-pvc
+
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: notes-db
+  labels:
+    run: notes-db
+  namespace: db
+spec:
+  type: NodePort
+  selector:
+    run: notes-db
+  ports:
+    - port: 3306
+      nodePort: 30036

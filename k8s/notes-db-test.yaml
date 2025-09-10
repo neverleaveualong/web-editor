@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-db
+  namespace: db
+spec:
+  # ... (윗부분은 동일) ...
+  template:
+    # ... (중간 부분은 동일) ...
+    spec:
+      containers:
+        - name: notes-database
+          image: mariadb:11.2.2
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: root
+          # --- 👇 이 부분을 삭제하거나 주석 처리 ---
+          # volumeMounts:
+          # - name: notes-db-storage
+          #   mountPath: "/var/lib/mysql"
+      # --- 👇 이 부분도 삭제하거나 주석 처리 ---
+      # volumes:
+      # - name: notes-db-storage
+      #   persistentVolumeClaim:
+      #     claimName: notes-db-pvc
