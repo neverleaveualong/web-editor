@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { JWT_SECRET } from "../settings";
+import { isQueryError } from "../utils/errors";
 
 const router = Router();
 
@@ -12,13 +13,7 @@ router.post("/users", async (req: Request, res: Response) => {
     await User.create({ email, password });
     res.sendStatus(201);
   } catch (error: unknown) {
-    // 중복 가입 처리
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      (error as any).code === "ER_DUP_ENTRY"
-    ) {
+    if (isQueryError(error) && error.code === "ER_DUP_ENTRY") {
       return res.sendStatus(409);
     }
     console.error(error);

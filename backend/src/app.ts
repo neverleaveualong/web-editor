@@ -1,9 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
+import cookieParser from "cookie-parser";
 import { userRouter } from "./routes/users";
 
 const app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
