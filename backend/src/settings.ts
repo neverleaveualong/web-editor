@@ -18,3 +18,5 @@ export const DB_USER = requireEnv("DB_USER");
 export const DB_PASSWORD = requireEnv("DB_PASSWORD");
 export const DB_DATABASE = requireEnv("DB_DATABASE");
 export const JWT_SECRET = requireEnv("JWT_SECRET");
+
+export const CORS_ALLOWED_ORIGIN = process.env.CORS_ALLOWED_ORIGIN || "";
